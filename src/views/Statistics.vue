@@ -1,8 +1,9 @@
 <template>
+    <Layout>
     <div>
-      sta.vue
-  <Nav/>
+    <p>  sta.vue</p>
     </div>
+    </Layout>
 </template>
 
 <script lang="ts">
