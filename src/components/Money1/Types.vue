@@ -27,9 +27,7 @@
       }
       this.type = type;
     }
-    mounted(){
-          console.log(this.propA)
-        }
+
   }
 
 
