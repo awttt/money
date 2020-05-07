@@ -12,20 +12,22 @@
 
 <script lang="ts">
   import Vue from 'vue';
-  import {Component, Prop} from 'vue-property-decorator';
+  import {Component, Prop, Watch} from 'vue-property-decorator';
 
   @Component
   export default class Types extends Vue {
-    type = '-'; //‘-’表示支出，‘+’表示收入
+
 
     @Prop(Number) propA: number | undefined;
     //运行时类型 Number    编译时类型number | undefined;
+
+    @Prop() readonly value!: string;
 
     selectType(type: string) {//type只能是‘-’和‘+’其中一个
       if (type !== '-' && type !== '+') {
         throw new Error('type is unknown');
       }
-      this.type = type;
+
     }
 
   }
