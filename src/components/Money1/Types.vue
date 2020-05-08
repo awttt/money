@@ -18,16 +18,13 @@
   export default class Types extends Vue {
 
 
-    @Prop(Number) propA: number | undefined;
-    //运行时类型 Number    编译时类型number | undefined;
-
     @Prop() readonly value!: string;
 
     selectType(type: string) {//type只能是‘-’和‘+’其中一个
       if (type !== '-' && type !== '+') {
         throw new Error('type is unknown');
       }
-
+      this.$emit('update:value',type)
     }
 
   }
