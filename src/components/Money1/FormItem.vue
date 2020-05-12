@@ -3,7 +3,8 @@
     <label class="notes">
       <span class="name">{{this.fieldName}}</span>
       <input type="text"
-             v-model="value"
+             :value="value"
+             @input="onValueChanged($event.target.value)"
              :placeholder="this.placeholder">
     </label>
   </div>
@@ -15,7 +16,7 @@
 
   @Component
   export default class FormItem extends Vue {
-    value = '';
+    @Prop({default:''}) value!: string;
 
     @Prop({required: true}) fieldName!: string;
     @Prop() placeholder?: string;
@@ -32,7 +33,7 @@
 <style lang="scss" scoped>
   .notes {
     font-size: 14px;
-
+    background: #f5f5f5;
     padding-left: 16px;
     display: flex;
     align-items: center;
