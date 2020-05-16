@@ -21,11 +21,11 @@
   import FormItem from '@/components/Money1/FormItem.vue';
   import {Component, Model, Watch} from 'vue-property-decorator';
   import recordListModel from '@/models/recordListModel';
-  import tagListModel from '@/models/tagLIstModel';
+
 
 
   const recordList = recordListModel.fetch();
-  const tagList = tagListModel.fetch();
+
 
   @Component({components: {Notes: FormItem, Types, Tags, NumberPad},})
   export default class Money extends Vue {
