@@ -18,30 +18,27 @@
 
 <script lang="ts">
 
-  import Vue from 'vue'
+  import Vue from 'vue';
   import tagListModel from '@/models/tagLIstModel';
   import {Component} from 'vue-property-decorator';
   import Button from '@/components/Button.vue';
-  tagListModel.fetch()
+
+  tagListModel.fetch();
 
 
   @Component({
     components: {Button}
   })
-export default class Labels extends Vue {
-    tags=tagListModel.data;
+  export default class Labels extends Vue {
+    tags = window.tagList;
+
     createTag() {
       const name = window.prompt('请输出标签名');
       if (name) {
-        const message = tagListModel.create(name);
-        if (message === 'duplicated') {
-          window.alert('标签名重复了');
-        } else if (message === 'success') {
-          window.alert('添加成功');
-        }
+        window.createTag(name);
       }
     }
-}
+  }
 
 </script>
 
@@ -50,13 +47,15 @@ export default class Labels extends Vue {
     background: white;
     font-size: 16px;
     padding-left: 16px;
+
     > .tag {
       min-height: 44px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       border-bottom: 1px solid #e6e6e6;
-      svg{
+
+      svg {
         width: 18px;
         height: 18px;
         color: #666;
@@ -64,14 +63,16 @@ export default class Labels extends Vue {
       }
     }
   }
-  .createTag{
+
+  .createTag {
     background: #787878;
     color: white;
     border-radius: 4px;
     border: none;
     height: 40px;
     padding: 0 16px;
-    &-wrapper{
+
+    &-wrapper {
       text-align: center;
       padding: 16px;
       margin-top: 44-16px;
