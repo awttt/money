@@ -3,11 +3,11 @@
 
     <NumberPad :value.sync="record.amount" @submit="saveRecord"/>
     <Types :value.sync="record.type"/>
-   <div class="notes">
-    <Notes field-name="备注"
-           placeholder="在这里输入备注"
-           @update:value="onUpdateNotes"/>
-   </div>
+    <div class="notes">
+      <Notes field-name="备注"
+             placeholder="在这里输入备注"
+             @update:value="onUpdateNotes"/>
+    </div>
     <Tags :data-source.sync="tags" @update:value="onUpdateTags"/>
   </Layout>
 </template>
@@ -23,14 +23,13 @@
   import recordListModel from '@/models/recordListModel';
 
 
-
   const recordList = recordListModel.fetch();
 
 
   @Component({components: {Notes: FormItem, Types, Tags, NumberPad},})
   export default class Money extends Vue {
     tags = window.tagList;
-    recordList: RecordItem[] = recordList;
+    recordList = window.recordList;
     record: RecordItem = {
       tags: [], notes: '', type: '-', amount: 0
     };
@@ -49,12 +48,7 @@
     }
 
     saveRecord(value: string) {
-      recordListModel.create(this.record);
-    }
-
-    @Watch('recordList')
-    onRecordListChange() {
-      recordListModel.save();
+      window.createRecord(this.record);
     }
   }
 </script>
@@ -64,7 +58,8 @@
     display: flex;
     flex-direction: column-reverse;
   }
-  .notes{
+
+  .notes {
     padding: 2px 0;
   }
 
