@@ -9,6 +9,8 @@
              @update:value="onUpdateNotes"/>
     </div>
     <Tags />
+    {{count}}
+    <button @click="$store.commit('increment',1)">+1</button>
   </Layout>
 </template>
 
@@ -21,13 +23,21 @@
   import FormItem from '@/components/Money1/FormItem.vue';
   import {Component, Model, Watch} from 'vue-property-decorator';
 
-  import store from '@/store/index2';
+  import oldStore from '@/store/index2';
+  import store from '@/store';
 
 
-  @Component({components: {Notes: FormItem, Types, Tags, NumberPad},})
+  @Component(
+    {components: {Notes: FormItem, Types, Tags, NumberPad},
+    computed:{
+     count(){
+       return store.state.count
+      }
+    }
+    })
   export default class Money extends Vue {
 
-    recordList = store.recordList;
+    recordList = oldStore.recordList;
     record: RecordItem = {
       tags: [], notes: '', type: '-', amount: 0
     };
@@ -44,8 +54,9 @@
     }
 
     saveRecord(value: string) {
-      store.createRecord(this.record);
+      oldStore.createRecord(this.record);
     }
+
   }
 </script>
 
