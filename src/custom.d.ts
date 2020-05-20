@@ -1,12 +1,16 @@
+type RootState = {
+  recordList: RecordItem[];
+  tagList: Tag[];
+  currentTag?: Tag;
+}
+
 type RecordItem = {
   tags: string[];
   notes: string;
   type: string;
   amount: number;
-  createdAt?: Date;
+  createdAt?: string;
 }
-
-
 
 
 type Tag = {
@@ -21,4 +25,3 @@ type TagListModel = {
   remove: (id: string) => boolean;
   save: () => void;
 }
-

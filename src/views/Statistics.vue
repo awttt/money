@@ -8,27 +8,21 @@
       <br/>
       interval:{{interval}}
     </div>
+
+    <div>
+      <ol>
+        <li v-for="(group,index) in result" :key="index">
+          <h3>{{group.title}}</h3>
+          <ol>
+            <li v-for="item in group.items" :key="item.id">
+              {{item.amount}} {{item.createdAt}}
+            </li>
+          </ol>
+        </li>
+      </ol>
+    </div>
   </Layout>
-
 </template>
-
-<style scoped lang="scss">
-  ::v-deep .type-tabs-item{
-    background: white;
-
-    &.selected {
-      background: #c4c4c4;
-
-      &::after {
-        display: none;
-      }
-    }
-  }
-  ::v-deep .interval-tabs-item {
-    height: 48px;
-  }
-</style>
-
 
 <script lang="ts">
 
@@ -40,14 +34,49 @@
 
   @Component({components: {Tabs}})
   export default class Statistics extends Vue {
+
+    get recordList() {
+      return (this.$store.state as RootState).recordList;
+    }
+
+    get result() {
+      const {recordList} = this;
+      type HashTableValue = { title: string; items: RecordItem[] }
+      const hashTable: { [key: string]: HashTableValue } = {};
+      for (let i = 0; i < recordList.length; i++) {
+        const [date, time] = recordList[i].createdAt!.split('T');
+        hashTable[date] = hashTable[date] || {title: date, items: []};
+        hashTable[date].items.push(recordList[i]);
+      }
+      return hashTable;
+    }
+
+    beforeCreate() {
+      this.$store.commit('fetchRecords');
+    }
+
     type = '-';
     interval = 'day';
-    recordTypeList = recordTypeList
-    intervalList = intervalList
+    recordTypeList = recordTypeList;
+    intervalList = intervalList;
 
   }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+  ::v-deep .type-tabs-item {
+    background: white;
 
+    &.selected {
+      background: #c4c4c4;
+
+      &::after {
+        display: none;
+      }
+    }
+  }
+
+  ::v-deep .interval-tabs-item {
+    height: 48px;
+  }
 </style>
